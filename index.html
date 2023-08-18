@@ -194,31 +194,31 @@
             }
         }
 
-        function addBasicLands() {
-            const swamps = parseInt(document.getElementById('swamps').value);
-            const islands = parseInt(document.getElementById('islands').value);
-            const plains = parseInt(document.getElementById('plains').value);
-            const mountains = parseInt(document.getElementById('mountains').value);
-            const forests = parseInt(document.getElementById('forests').value);
+            function addBasicLands() {
+                const swamps = parseInt(document.getElementById('swamps').value);
+                const islands = parseInt(document.getElementById('islands').value);
+                const plains = parseInt(document.getElementById('plains').value);
+                const mountains = parseInt(document.getElementById('mountains').value);
+                const forests = parseInt(document.getElementById('forests').value);
 
-            if (!isNaN(swamps) && swamps > 0) {
-                addBasicLand('Swamp', swamps);
-            }
-            if (!isNaN(islands) && islands > 0) {
-                addBasicLand('Island', islands);
-            }
-            if (!isNaN(plains) && plains > 0) {
-                addBasicLand('Plains', plains);
-            }
-            if (!isNaN(mountains) && mountains > 0) {
-                addBasicLand('Mountain', mountains);
-            }
-            if (!isNaN(forests) && forests > 0) {
-                addBasicLand('Forest', forests);
-            }
+                if (!isNaN(swamps) && swamps > 0) {
+                    addBasicLand('Swamp', swamps);
+                }
+                if (!isNaN(islands) && islands > 0) {
+                    addBasicLand('Island', islands);
+                }
+                if (!isNaN(plains) && plains > 0) {
+                    addBasicLand('Plains', plains);
+                }
+                if (!isNaN(mountains) && mountains > 0) {
+                    addBasicLand('Mountain', mountains);
+                }
+                if (!isNaN(forests) && forests > 0) {
+                    addBasicLand('Forest', forests);
+                }
 
-            displayDeck();
-        }
+                displayDeck();
+            }
 
         function addBasicLand(landType, quantity) {
             const landCard = basicLands.find(land => land.name === landType);
@@ -252,6 +252,24 @@
 
         function setCommander(card) {
             selectedCommander = card;
+
+            if (card.color_identity.includes('W')) {
+                addLandOfType('Plains');
+            }
+
+            if (card.color_identity.includes('U')) {
+                addLandOfType('Island');
+            }
+            if (card.color_identity.includes('R')) {
+                addLandOfType('Mountain');
+            }
+            if (card.color_identity.includes('B')) {
+                addLandOfType('Swamp');
+            }
+            if (card.color_identity.includes('G')) {
+                addLandOfType('Forest');
+            }
+
             const commanderDiv = document.getElementById('selectedCommander');
             commanderDiv.innerHTML = `
             <h2>Commander:</h2>
