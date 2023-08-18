@@ -130,21 +130,12 @@
 
         <ul id="results"></ul>
 
-       <div id="deck">
+        <div id="deck">
             <h3>Votre deck (<span id="totalCardCount">0</span> cartes):</h3>
             <ul id="deckList"></ul>
         </div>
 
 
-        <div id="basicLands">
-            <h3>Terrains de base:</h3>
-            <label>Marrais: <input type="number" id="swamps" min="0"></label>
-            <label>Îles: <input type="number" id="islands" min="0"></label>
-            <label>Plaines: <input type="number" id="plains" min="0"></label>
-            <label>Montagnes: <input type="number" id="mountains" min="0"></label>
-            <label>Forêts: <input type="number" id="forests" min="0"></label>
-            <button onclick="addBasicLands()">Ajouter au Deck</button>
-        </div>
 
 
     </div>
@@ -194,34 +185,38 @@
             }
         }
 
-            function addBasicLands() {
-                const swamps = parseInt(document.getElementById('swamps').value);
-                const islands = parseInt(document.getElementById('islands').value);
-                const plains = parseInt(document.getElementById('plains').value);
-                const mountains = parseInt(document.getElementById('mountains').value);
-                const forests = parseInt(document.getElementById('forests').value);
 
-                if (!isNaN(swamps) && swamps > 0) {
-                    addBasicLand('Swamp', swamps);
-                }
-                if (!isNaN(islands) && islands > 0) {
-                    addBasicLand('Island', islands);
-                }
-                if (!isNaN(plains) && plains > 0) {
-                    addBasicLand('Plains', plains);
-                }
-                if (!isNaN(mountains) && mountains > 0) {
-                    addBasicLand('Mountain', mountains);
-                }
-                if (!isNaN(forests) && forests > 0) {
-                    addBasicLand('Forest', forests);
-                }
 
-                displayDeck();
+        function addBasicLandsCommander(card) {
+            const value = 1;
+
+            if (card.color_identity.includes('W')) {
+                addBasicLand('Plains', 1);
             }
+
+            if (card.color_identity.includes('U')) {
+                addBasicLand('Island', 1);
+            }
+            if (card.color_identity.includes('R')) {
+                addBasicLand('Mountain', 1);
+            }
+            if (card.color_identity.includes('B')) {
+                addBasicLand('Swamp', 1);
+            }
+            if (card.color_identity.includes('G')) {
+                addBasicLand('Forest', 1);
+            }
+
+
+            displayDeck();
+        }
+
+
+
 
         function addBasicLand(landType, quantity) {
             const landCard = basicLands.find(land => land.name === landType);
+
 
             if (landCard) {
                 landCard.quantity = quantity;
@@ -253,22 +248,7 @@
         function setCommander(card) {
             selectedCommander = card;
 
-            if (card.color_identity.includes('W')) {
-                addLandOfType('Plains');
-            }
-
-            if (card.color_identity.includes('U')) {
-                addLandOfType('Island');
-            }
-            if (card.color_identity.includes('R')) {
-                addLandOfType('Mountain');
-            }
-            if (card.color_identity.includes('B')) {
-                addLandOfType('Swamp');
-            }
-            if (card.color_identity.includes('G')) {
-                addLandOfType('Forest');
-            }
+            addBasicLandsCommander(card);
 
             const commanderDiv = document.getElementById('selectedCommander');
             commanderDiv.innerHTML = `
@@ -286,9 +266,9 @@
             }
 
             for (const color of card.color_identity) {
-                if (selectedCommander.color_identity.includes(color)) {
-                    return true; // Si au moins une couleur de la carte correspond à une couleur du commandant.
-                }
+                if (!selectedCommander.color_identity.includes(color)) {
+                    return false; 
+                } 
             }
             return false;  // Aucune couleur ne correspond.
         }
@@ -321,7 +301,7 @@
 
             let columnIndex = 0;
             let rowIndex = 0;
-            let totalCardCount = 0; 
+            let totalCardCount = 0;
 
             for (let card of deck) {
                 const cardDiv = document.createElement('div');
@@ -342,7 +322,7 @@
                     columnIndex = 0;
                     rowIndex++;
                 }
-                totalCardCount += 1; 
+                totalCardCount += 1;
             }
 
             // Afficher les terrains de base dans la dernière ligne
