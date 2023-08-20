@@ -8,6 +8,6 @@
 <?php 
 
 $content = ob_get_clean();
-$title = " Page Index ";
+$title = " Acceuil ";
 require("Gabarit.php");
 ?>

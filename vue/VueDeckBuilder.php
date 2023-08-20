@@ -39,6 +39,6 @@
 <?php 
 
 $content = ob_get_clean();
-$title = " Page Index ";
+$title = " Deck Builder ";
 require("Gabarit.php");
 ?>
