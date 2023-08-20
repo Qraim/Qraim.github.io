@@ -44,30 +44,45 @@ function populateCardList(cards) {
       const cardDetails = document.createElement("div");
       cardDetails.classList.add("card-details");
 
+      console.log(card);
+
       let img;
+      let name;
+      let oracle_text;
+      let id;
 
       if(card.card_faces && card.card_faces.length > 1){
+        console.log("ici");
         img = card.card_faces[0].image_uris.small;
+        name = card.card_faces[0].name;
+        oracle_text = card.card_faces[0].oracle_text;
+        id = card.card_faces[0].id;
       } else {
         img = card.image_uris.small;
+        name = card.name;
+        oracle_text = card.oracle_text;
+        id = card.id;
       }
 
       listItem.innerHTML = `
-          <img src="${img}" alt="${card.card_faces[0].name}" title='${card.card_faces[0].oracle_text}'>
+      <div class="card-wrapper">
+          <img src="${img}" alt="${name}" title='${oracle_text}'>
           <div class="card-details">
               ${card.name}
               <button onclick="addToDeck('${card.id}')">Ajouter au Deck</button>
               ${card.type_line.includes("Legendary Creature") || card.type_line.includes("Planeswalker")
-                  ? `<button onclick="selectAsCommander('${card.card_faces[0].id}')">Choisir comme Commander</button>`
+                  ? `<button onclick="selectAsCommander('${id}')">Choisir comme Commander</button>`
                   : ""}
           </div>
+      </div>
       `;
+      
+
 
       results.appendChild(listItem);
   }
 
-  // Ouvrir la modal après avoir rempli les résultats
-  openModal();
+
 }
 
 
@@ -217,6 +232,12 @@ function displayDeck() {
 
   for (let cardName in cardCounts) {
       const card = deck.find(c => c.name === cardName);
+      console.log(card);
+      if(card.card_faces && card.card_faces.length > 1){
+        id = card.card_faces[0].id;
+      } else {
+        id = card.id;
+      }
 
       const cardDiv = document.createElement("div");
       cardDiv.setAttribute("id", "card-" + card.id + "-" + (columnIndex + rowIndex * 7)); // Unique ID

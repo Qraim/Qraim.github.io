@@ -1,23 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Cartes par Extension</title>
-    <link rel="stylesheet" href="styles.css">
-        
-</head>
+<?php ob_start(); ?>
 
-<body>
-    <div class="navbar">
-        <a href="./index.html">Home</a>
-        <a href="./deckbuilder.html">deckbuilder</a>
-        <a href="./extension.html">Extensions</a>
-
-
-    </div>
-    <center><h1 >Liste des Cartes par Extension</h1>
+<center><h1 >Liste des Cartes par Extension</h1>
 
     <div id="setSearch">
         <label for="setCode">Entrez le nom ou le code de l'extension : </label>
@@ -70,8 +54,11 @@
 
     </div>
 
-    <script type="text/javascript" src="recherche.js"></script>
+    <script type="text/javascript" src="./public/js/extensions.js"></script>
 
-</body>
+<?php 
 
-</html>
+$content = ob_get_clean();
+$title = " Extensions ";
+require("Gabarit.php");
+?>

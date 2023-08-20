@@ -1,25 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php ob_start(); ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Création de Deck MTG Commander</title>
-    <link rel="stylesheet" href="styles.css">
-
-</head>
-
-
-<body>
-    <div class="navbar">
-        <a href="./index.html">Home</a>
-        <a href="./deckbuilder.html">deckbuilder</a>
-        <a href="#">Services</a>
-        <a href="#">Portfolio</a>
-        <a href="#">Contact</a>
-    </div>
-
-    <div id="content">
+<div id="content">
         <h1>Création de Deck MTG Commander</h1>
     
         <div class="section">
@@ -52,8 +33,11 @@
         <h2>Commander:</h2>
     </div>  
 
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="./public/js/deckbuilder.js"></script>
 
-</body>
+<?php 
 
-</html>
+$content = ob_get_clean();
+$title = " Page Index ";
+require("Gabarit.php");
+?>
