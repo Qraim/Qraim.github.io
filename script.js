@@ -44,13 +44,21 @@ function populateCardList(cards) {
       const cardDetails = document.createElement("div");
       cardDetails.classList.add("card-details");
 
+      let img;
+
+      if(card.card_faces && card.card_faces.length > 1){
+        img = card.card_faces[0].image_uris.small;
+      } else {
+        img = card.image_uris.small;
+      }
+
       listItem.innerHTML = `
-          <img src="${card.image_uris.small}" alt="${card.name}" title='${card.oracle_text}'>
+          <img src="${img}" alt="${card.card_faces[0].name}" title='${card.card_faces[0].oracle_text}'>
           <div class="card-details">
               ${card.name}
               <button onclick="addToDeck('${card.id}')">Ajouter au Deck</button>
               ${card.type_line.includes("Legendary Creature") || card.type_line.includes("Planeswalker")
-                  ? `<button onclick="selectAsCommander('${card.id}')">Choisir comme Commander</button>`
+                  ? `<button onclick="selectAsCommander('${card.card_faces[0].id}')">Choisir comme Commander</button>`
                   : ""}
           </div>
       `;

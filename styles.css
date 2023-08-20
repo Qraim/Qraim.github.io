@@ -259,3 +259,84 @@
 .card-preview .card-details {
     flex-grow: 1;
 }
+
+
+.columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-column {
+    flex: 1;  /* Permet à chaque colonne de se développer pour remplir l'espace vertical disponible */
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    overflow-y: auto;  /* Défilement vertical si nécessaire */
+    
+}
+
+.card-column img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    
+}
+
+#white-cards {
+    background-color: #fff5eb; /* Une couleur beige pour représenter le blanc */
+}
+
+#blue-cards {
+    background-color: #6fa3f1; /* Une couleur bleu clair */
+}
+
+#black-cards {
+    background-color: #242323; /* Une couleur gris foncé pour représenter le noir */
+}
+
+#red-cards {
+    background-color: rgb(206, 46, 46); /* Une couleur rouge clair */
+}
+
+#green-cards {
+    background-color: #4aee8b; /* Une couleur vert clair */
+}
+
+
+.card-row img, .card-column img {
+    max-width: 300px; /* Ajustez selon votre préférence */
+    height: auto;
+}
+
+.card-row img, .card-column img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+.card-row + .card-row {
+    margin-top: 20px; /* Ajoute une marge de 20px au-dessus de chaque card-row qui suit une autre card-row */
+}
+
+.card-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.card-row > div {
+    min-width: 100px; /* Ajustez selon la taille de vos cartes */
+    margin: 5px; /* Espace autour de chaque carte */
+    box-sizing: border-box;
+}
+
+
+
+
+.card-details {
+    text-align: center;
+}
+
+
