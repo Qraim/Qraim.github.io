@@ -33,6 +33,13 @@ async function searchCard() {
   populateCardList(data.data);
 }
 
+function getCardName(card) {
+    if (card.card_faces && card.card_faces.length > 1) {
+        return card.card_faces[0].name;
+    }
+    return card.name;
+}
+
 function populateCardList(cards) {
   const results = document.getElementById("results");
   results.innerHTML = "";
@@ -151,10 +158,17 @@ function setCommander(card) {
 
   addBasicLandsCommander(card);
 
+  let img;
+  if(card.card_faces && card.card_faces.length > 1){
+    img = card.card_faces[0].image_uris.normal;
+  } else {
+    img = card.image_uris.normal;
+  }
+
   const commanderDiv = document.getElementById("selectedCommander");
   commanderDiv.innerHTML = `
             <h2>Commander:</h2>
-            <img src="${card.image_uris.normal}" alt="${card.name}">
+            <img src="${img}" alt="${getCardName(card)}">
         `;
 }
 
@@ -202,11 +216,11 @@ function displayDeck() {
   const basicLandOrder = ["Plaine", "Île", "Marais", "Montagne", "Forêt"];
 
   // Séparez les cartes en terrains et non-terrains
-  let lands = deck.filter(card => basicLandTypes.includes(card.name));
-  let nonLands = deck.filter(card => !basicLandTypes.includes(card.name));
+  let lands = deck.filter(card => basicLandTypes.includes(getCardName(card)));
+  let nonLands = deck.filter(card => !basicLandTypes.includes(getCardName(card)));
   
   // Triez les non-terrains par nom
-  nonLands.sort((a, b) => a.name.localeCompare(b.name));
+  nonLands.sort((a, b) => getCardName(a).localeCompare(getCardName(b)));
   
   // Triez les terrains par l'ordre prédéfini
   lands.sort((a, b) => basicLandOrder.indexOf(a.name) - basicLandOrder.indexOf(b.name));
@@ -253,23 +267,37 @@ function displayDeck() {
       cardDiv.style.gridColumn = columnIndex + 1;
       cardDiv.style.gridRow = rowIndex + 1;
 
+
+      let img;
+      let nb;
+      if(card.card_faces && card.card_faces.length > 1){
+        img = card.card_faces[0].image_uris.normal;
+      } else {
+        img = card.image_uris.normal;
+      }
+
+      if(!cardCounts[getCardName(card)]){
+        nb = 1;
+      } else {
+        nb=cardCounts[getCardName(card)];
+      }
       cardDiv.innerHTML = `
-          <img src="${card.image_uris.normal}" alt="${card.name}">
-          <p>${card.name} x${cardCounts[card.name]}</p>
+          <img src="${img}" alt="${getCardName(card)}">
+          <p>${getCardName(card)} x${nb}</p>
       `;
 
       const cardImg = cardDiv.querySelector("img");
-      if (basicLandTypes.includes(card.name)) {
+      if (basicLandTypes.includes(getCardName(card))) {
           cardImg.addEventListener('click', function(event) {
               if (event.button === 0) {
-                  addLand(card.name);
+                  addLand(getCardName(card));
               }
           });
 
           cardImg.addEventListener('contextmenu', function(event) {
               event.preventDefault();
               if (event.button === 2) {
-                  removeLand(card.name);
+                  removeLand(getCardName(card));
               }
           });
       }
@@ -284,6 +312,18 @@ function displayDeck() {
   }
 
   document.getElementById("totalCardCount").textContent = deck.length;
+
+  let price = 0;
+
+  deck.forEach(element => {
+    let eursprice = parseFloat(element.prices.eur);
+    if(eursprice){
+        price += eursprice;
+    }
+  });
+
+  document.getElementById("price").textContent = price.toFixed(2);
+
 }
 
 function drag(event) {

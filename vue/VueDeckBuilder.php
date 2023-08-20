@@ -1,6 +1,7 @@
 <?php ob_start(); ?>
 
 <div id="content">
+    <center>
         <h1>Création de Deck MTG Commander</h1>
     
         <div class="section">
@@ -16,9 +17,9 @@
               </div>
               
         </div>
-    
+        </center>
         <div class="section">
-            <h3>Votre deck (<span id="totalCardCount">0</span> cartes):</h3>
+            <h3>Votre deck (<span id="totalCardCount">0</span> cartes)  <span id="price"></span>€</h3>
             <ul id="deckList"></ul>
         </div>
     
