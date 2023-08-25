@@ -446,4 +446,28 @@ function muligan() {
   }
 }
 
+function savedeck(){
+    // Les autres informations nécessaires, telles que l'ID de l'utilisateur et le commandant du deck
+  const userId = "someUserId";
+  const commanderId = commanderId;
 
+  // Crée une requête POST pour envoyer les données du deck au serveur
+  fetch("path/to/your/php/file.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      commander_id: commanderId,
+      deck_data: deckData,
+    }),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Succès :", data);
+  })
+  .catch((error) => {
+    console.error("Erreur :", error);
+  });
+}

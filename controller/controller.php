@@ -12,4 +12,12 @@ function extensions(){
     require("./vue/VueExtensions.php");
 } 
 
+function recherche(){
+    require("./vue/Vuerecherche.php");
+} 
+
+function connexion(){
+    require("./vue/Vueconnexion.php");
+} 
+
 ?>
