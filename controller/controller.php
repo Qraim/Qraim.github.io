@@ -20,4 +20,8 @@ function connexion(){
     require("./vue/Vueconnexion.php");
 } 
 
+function play(){
+    require("./vue/VueTerrain.php");
+} 
+
 ?>

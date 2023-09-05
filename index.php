@@ -13,6 +13,8 @@ if( isset ( $_GET['action']) ){
     else if( $_GET['action']== 'extensions') extensions() ;
     else if( $_GET['action']== 'recherche') recherche() ;
     else if( $_GET['action']== 'connexion') connexion() ;
+    else if( $_GET['action']== 'play') play() ;
+
     if ($_GET['action'] === 'logout') {
         unset($_SESSION['username']); // ou vous pourriez utiliser session_destroy();
         index();

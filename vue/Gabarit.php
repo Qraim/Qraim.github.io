@@ -14,6 +14,8 @@
         <a href="index.php?action=deckbuilder">Builder</a>
         <a href="index.php?action=extensions">Extensions</a>
         <a href="index.php?action=recherche">Recherche</a>
+        <a href="index.php?action=play">Jouer</a>
+
         <?php
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
