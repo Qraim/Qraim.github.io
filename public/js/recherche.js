@@ -1,45 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById('searchForm');
-  
-    form.addEventListener('submit', async (event) => {
+  const form = document.getElementById('searchForm');
+
+  form.addEventListener('submit', async (event) => {
       event.preventDefault();
-  
+
       const formData = new FormData(form);
-  
       const name = formData.get('name') || '';
-      const types = formData.getAll('type').join('+');
+      const typesArray = formData.getAll('type');
       const colors = formData.getAll('color').join('');
       const manaCost = formData.get('manaCost') || '';
-  
-      const apiUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(name)}+c=${encodeURIComponent(colors)}+t:${encodeURIComponent(types)}`;
+
+      // Construisez la chaîne de requête pour les types
+      const typesQuery = typesArray.map(type => `t:${encodeURIComponent(type)}`).join('+OR+');
+
+      const apiUrl = `https://api.scryfall.com/cards/search?q=${name ? `${encodeURIComponent(name)}+` : ''}${colors ? `c=${encodeURIComponent(colors)}+` : ''}${typesQuery ? `${typesQuery}+` : ''}`;
+
       try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          console.error(`Erreur: ${response.status}`);
-          return;
-        }
-  
-        let data = await response.json();
-        if (Array.isArray(data.data)) {
-          // Filtrez les cartes qui ne correspondent pas au coût en mana
-          if (manaCost) {
-            data.data = data.data.filter(card => card.cmc==manaCost);
+          const response = await fetch(apiUrl);
+          if (!response.ok) {
+              console.error(`Erreur: ${response.status}`);
+              return;
           }
 
-          // Triez les cartes par nom (vous pouvez les trier comme vous le souhaitez)
-          data.data.sort((a, b) => a.name.localeCompare(b.name));
-  
-          populateCardList(data.data);
-        } else {
-          console.error("Erreur : Réponse de l'API non conforme ou data.data n'est pas un tableau");
-        }
-      } catch (error) {
-        console.error(`Erreur: ${error}`);
-      }
-    });
-  });
+          let data = await response.json();
+          if (Array.isArray(data.data)) {
+              // Filtrer les cartes qui ne correspondent pas au coût en mana
+              if (manaCost) {
+                  data.data = data.data.filter(card => card.cmc === parseInt(manaCost));
+              }
 
-  
+
+              // Triez les cartes par nom
+              data.data.sort((a, b) => a.name.localeCompare(b.name));
+
+              populateCardList(data.data);
+          } else {
+              console.error("Erreur: Réponse de l'API non conforme ou data.data n'est pas un tableau");
+          }
+      } catch (error) {
+          console.error(`Erreur: ${error}`);
+      }
+  });
+});
+
+
+
   // Le reste du code reste le même
   
   
